@@ -414,10 +414,9 @@ DarwinIA (responda como tutora pedagógica):`;
         const encodedHeader = base64urlEncode(JSON.stringify(header));
         const encodedPayload = base64urlEncode(JSON.stringify(payload));
         
-        // Para assinatura RSA, vamos usar uma abordagem simplificada
-        // Em produção, use uma biblioteca como jsrsasign
+        // Assinar usando jsrsasign
         const signatureInput = `${encodedHeader}.${encodedPayload}`;
-        const signature = await signData(signatureInput);
+        const signature = signDataWithRSA(signatureInput);
         const encodedSignature = base64urlEncode(signature);
 
         return `${encodedHeader}.${encodedPayload}.${encodedSignature}`;
@@ -431,20 +430,14 @@ DarwinIA (responda como tutora pedagógica):`;
             .replace(/\//g, '_');
     }
     
-    // Função para assinar dados (versão simplificada)
-    async function signData(data) {
-        // Em ambiente de produção, use uma biblioteca proper para RSA
-        // Esta é uma versão simplificada para demonstração
+    // Função para assinar dados com RSA usando jsrsasign
+    function signDataWithRSA(data) {
         try {
-            // Converter para ArrayBuffer
-            const encoder = new TextEncoder();
-            const dataBuffer = encoder.encode(data);
-            
-            // Em produção real, você importaria a chave privada corretamente
-            // Por agora, retornamos uma assinatura dummy
-            return 'asssinatura_simplificada_para_testes';
+            // Usando a biblioteca jsrsasign para assinatura RSA
+            const signature = KJUR.crypto.Sign.sign({alg: 'SHA256withRSA'}, data, SERVICE_ACCOUNT.private_key);
+            return signature;
         } catch (error) {
-            console.error('Erro na assinatura:', error);
+            console.error('Erro na assinatura RSA:', error);
             throw new Error('Erro na assinatura JWT');
         }
     }
