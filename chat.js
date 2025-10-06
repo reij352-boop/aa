@@ -1,6 +1,6 @@
 // chat.js - DarwinIA com Google Apps Script (Versão Corrigida)
 
-const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w';
+const GEMINI_API_KEY = 'AIzaSyCwt41tpQg4CBhfFGD22yct0w8WuDKa6zQ';
 
 // URL do seu Web App do Google Apps Script
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVXZjNJnzqTi7I2ljKvmjYNVPdLOgixMjl5s5vwXKyALJYdcD0wwqAOs3yNhltEfFv/exec';
@@ -164,7 +164,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Enviando prompt para Gemini:", prompt);
         
         // Fazer requisição para a API do Gemini
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
