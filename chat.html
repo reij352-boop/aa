@@ -1,92 +1,46 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DarwinIA - Chat</title>
-    <link rel="stylesheet" href="styles.css">
-    <!-- Ícones -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body>
-    <div class="chat-container">
-        <!-- Header -->
-        <div class="chat-header">
-            <div class="header-info">
-                <h1><i class="fas fa-dna"></i> Darwin<span>IA</span></h1>
-                <div class="session-info">
-                    <span id="currentTheme"><i class="fas fa-book"></i> Tema: [Tema]</span>
-                    <span id="currentLevel"><i class="fas fa-chart-line"></i> Nível: [Nível]</span>
+<!-- Modal de Avaliação CORRIGIDO -->
+<div id="evaluationModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>📊 Avaliar Sessão</h2>
+            <span class="close">&times;</span>
+        </div>
+        <form id="evaluationForm">
+            <div class="rating-group">
+                <div class="rating-label">Quanto a DarwinIA ajudou no seu aprendizado?</div>
+                <div class="rating">
+                    <input type="radio" id="help1" name="ajuda" value="1">
+                    <label for="help1">1</label>
+                    <input type="radio" id="help2" name="ajuda" value="2">
+                    <label for="help2">2</label>
+                    <input type="radio" id="help3" name="ajuda" value="3">
+                    <label for="help3">3</label>
+                    <input type="radio" id="help4" name="ajuda" value="4">
+                    <label for="help4">4</label>
+                    <input type="radio" id="help5" name="ajuda" value="5">
+                    <label for="help5">5</label>
                 </div>
             </div>
-            <button id="evaluateBtn" class="btn-secondary">
-                <i class="fas fa-star"></i> Avaliar Sessão
+            
+            <div class="rating-group">
+                <div class="rating-label">Quanto você entende do conteúdo agora?</div>
+                <div class="rating">
+                    <input type="radio" id="understanding1" name="entendimento" value="1">
+                    <label for="understanding1">1</label>
+                    <input type="radio" id="understanding2" name="entendimento" value="2">
+                    <label for="understanding2">2</label>
+                    <input type="radio" id="understanding3" name="entendimento" value="3">
+                    <label for="understanding3">3</label>
+                    <input type="radio" id="understanding4" name="entendimento" value="4">
+                    <label for="understanding4">4</label>
+                    <input type="radio" id="understanding5" name="entendimento" value="5">
+                    <label for="understanding5">5</label>
+                </div>
+            </div>
+            
+            <button type="submit" class="btn-primary evaluation-submit">
+                ✅ Enviar Avaliação
             </button>
-        </div>
-
-        <!-- Área de Mensagens -->
-        <div class="chat-messages" id="chatMessages">
-            <!-- Mensagens serão inseridas aqui -->
-        </div>
-
-        <!-- Área de Input -->
-        <div class="chat-input-container">
-            <div class="input-wrapper">
-                <textarea id="messageInput" placeholder="Digite sua pergunta sobre biologia..." rows="1"></textarea>
-                <button id="sendButton" class="btn-send">
-                    <i class="fas fa-paper-plane"></i>
-                </button>
-            </div>
-        </div>
+        </form>
     </div>
-
-    <!-- Modal de Avaliação -->
-    <div id="evaluationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-chart-bar"></i> Avaliar Sessão</h2>
-                <span class="close">&times;</span>
-            </div>
-            <form id="evaluationForm">
-                <div class="input-group">
-                    <label><i class="fas fa-robot"></i> Quanto a DarwinIA ajudou no seu aprendizado?</label>
-                    <div class="rating">
-                        <input type="radio" id="help1" name="ajuda" value="1">
-                        <label for="help1">1</label>
-                        <input type="radio" id="help2" name="ajuda" value="2">
-                        <label for="help2">2</label>
-                        <input type="radio" id="help3" name="ajuda" value="3">
-                        <label for="help3">3</label>
-                        <input type="radio" id="help4" name="ajuda" value="4">
-                        <label for="help4">4</label>
-                        <input type="radio" id="help5" name="ajuda" value="5">
-                        <label for="help5">5</label>
-                    </div>
-                </div>
-                
-                <div class="input-group">
-                    <label><i class="fas fa-graduation-cap"></i> Quanto você entende do conteúdo agora?</label>
-                    <div class="rating">
-                        <input type="radio" id="understanding1" name="entendimento" value="1">
-                        <label for="understanding1">1</label>
-                        <input type="radio" id="understanding2" name="entendimento" value="2">
-                        <label for="understanding2">2</label>
-                        <input type="radio" id="understanding3" name="entendimento" value="3">
-                        <label for="understanding3">3</label>
-                        <input type="radio" id="understanding4" name="entendimento" value="4">
-                        <label for="understanding4">4</label>
-                        <input type="radio" id="understanding5" name="entendimento" value="5">
-                        <label for="understanding5">5</label>
-                    </div>
-                </div>
-                
-                <button type="submit" class="btn-primary">
-                    <i class="fas fa-check"></i> Enviar Avaliação
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <script src="chat.js"></script>
-</body>
-</html>
+</div>
