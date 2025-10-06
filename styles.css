@@ -1,4 +1,4 @@
-/* styles.css - DarwinIA Dark Mode Fixo */
+/* styles.css - DarwinIA Chat Fixo e Mobile Otimizado */
 
 * {
     margin: 0;
@@ -35,7 +35,6 @@
     --radius-sm: 8px;
     --radius: 12px;
     --radius-lg: 16px;
-    --radius-xl: 20px;
     
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -47,16 +46,11 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 16px;
+    padding: 0;
+    overflow: hidden; /* Remove scroll do body */
 }
 
-/* Containers */
-.login-container,
-.config-container {
-    width: 100%;
-    max-width: 375px;
-}
-
+/* Chat Container FIXO - Sem Scroll */
 .chat-container {
     width: 100%;
     max-width: 100%;
@@ -65,20 +59,14 @@ body {
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
 }
 
-/* Cards */
-.login-card,
-.config-card {
-    background: var(--background-secondary);
-    padding: 32px 24px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
-    text-align: center;
-    border: 1px solid var(--border);
-}
-
-/* Header */
+/* Header Fixo */
 .chat-header {
     background: var(--background);
     border-bottom: 0.5px solid var(--border);
@@ -87,6 +75,8 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
+    position: relative;
+    z-index: 10;
 }
 
 .header-info h1 {
@@ -112,107 +102,61 @@ body {
     border: 0.5px solid var(--border);
 }
 
-/* Logo */
-.logo {
-    margin-bottom: 32px;
+/* Área de Mensagens COM SCROLL */
+.chat-messages {
+    flex: 1;
+    padding: 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    background: var(--background);
+    /* Permite scroll apenas nesta área */
+    -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
 }
 
-.logo h1 {
-    font-size: 28px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 4px;
+/* Input Container - Vai subir com teclado */
+.chat-input-container {
+    padding: 16px;
+    background: var(--background);
+    border-top: 0.5px solid var(--border);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 5;
 }
 
-.logo p {
-    color: var(--text-tertiary);
-    font-size: 15px;
-    font-weight: 400;
-}
-
-/* Forms */
-.login-form,
-.config-form {
-    text-align: left;
-}
-
-.input-group {
-    margin-bottom: 20px;
-}
-
-.input-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--text-primary);
-    font-weight: 600;
-    font-size: 15px;
-}
-
-.input-group input,
-.input-group select,
-.input-group textarea {
-    width: 100%;
-    padding: 12px 16px;
+.input-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    background: var(--background-secondary);
+    border-radius: 20px;
+    padding: 8px 12px;
     border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-size: 16px;
-    background: var(--background-tertiary);
-    color: var(--text-primary);
     transition: var(--transition);
-    -webkit-appearance: none;
 }
 
-.input-group input:focus,
-.input-group select:focus,
-.input-group textarea:focus {
-    outline: none;
+.input-wrapper:focus-within {
     border-color: var(--primary);
 }
 
-.input-group small {
-    display: block;
-    margin-top: 6px;
-    color: var(--text-tertiary);
-    font-size: 13px;
-}
-
-/* Botões */
-.btn-primary {
-    width: 100%;
-    padding: 14px;
-    background: var(--primary);
-    color: white;
+#messageInput {
+    flex: 1;
     border: none;
-    border-radius: var(--radius);
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    margin-top: 8px;
-}
-
-.btn-primary:active {
-    background: var(--primary-dark);
-    transform: scale(0.98);
-}
-
-.btn-secondary {
-    padding: 8px 16px;
-    background: var(--background-secondary);
+    outline: none;
+    background: transparent;
+    font-size: 16px;
+    resize: none;
+    max-height: 120px;
+    line-height: 1.4;
     color: var(--text-primary);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    font-size: 15px;
 }
 
-.btn-secondary:active {
-    background: var(--background-tertiary);
-    transform: scale(0.98);
+#messageInput::placeholder {
+    color: var(--text-tertiary);
 }
 
+/* Botão Enviar */
 .btn-send {
     background: var(--primary);
     color: white;
@@ -233,15 +177,22 @@ body {
     transform: scale(0.95);
 }
 
-/* Área de Mensagens */
-.chat-messages {
-    flex: 1;
-    padding: 16px;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: var(--background);
+/* Botão Avaliar */
+.btn-secondary {
+    padding: 8px 16px;
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    font-size: 15px;
+}
+
+.btn-secondary:active {
+    background: var(--background-tertiary);
+    transform: scale(0.98);
 }
 
 /* Mensagens */
@@ -291,45 +242,6 @@ body {
     text-align: left;
 }
 
-/* Input */
-.chat-input-container {
-    padding: 16px;
-    background: var(--background);
-    border-top: 0.5px solid var(--border);
-    flex-shrink: 0;
-}
-
-.input-wrapper {
-    display: flex;
-    align-items: flex-end;
-    gap: 8px;
-    background: var(--background-secondary);
-    border-radius: 20px;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    transition: var(--transition);
-}
-
-.input-wrapper:focus-within {
-    border-color: var(--primary);
-}
-
-#messageInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    font-size: 16px;
-    resize: none;
-    max-height: 120px;
-    line-height: 1.4;
-    color: var(--text-primary);
-}
-
-#messageInput::placeholder {
-    color: var(--text-tertiary);
-}
-
 /* Indicador de Digitação */
 .typing-indicator {
     display: flex;
@@ -358,7 +270,7 @@ body {
     30% { transform: translateY(-4px); opacity: 1; }
 }
 
-/* Modal de Avaliação - CORRIGIDO */
+/* Modal */
 .modal {
     display: none;
     position: fixed;
@@ -429,7 +341,6 @@ body {
     gap: 20px;
 }
 
-/* Rating */
 .rating-group {
     display: flex;
     flex-direction: column;
@@ -481,32 +392,34 @@ body {
     transform: scale(0.95);
 }
 
-/* Botão de enviar avaliação - VISÍVEL */
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 8px;
+}
+
+.btn-primary:active {
+    background: var(--primary-dark);
+    transform: scale(0.98);
+}
+
 .evaluation-submit {
     margin-top: 16px;
     width: 100%;
 }
 
-/* Info */
-.login-info {
-    margin-top: 20px;
-    padding: 12px 16px;
-    background-color: var(--background-tertiary);
-    border-radius: var(--radius);
-    font-size: 13px;
-    color: var(--text-secondary);
-    border: 0.5px solid var(--border);
-}
-
-/* Mobile */
+/* Mobile - Otimização para Teclado */
 @media (max-width: 768px) {
-    body {
-        padding: 0;
-    }
-    
     .chat-container {
-        height: 100dvh;
-        border-radius: 0;
+        height: 100dvh; /* Usa altura dinâmica da viewport */
     }
     
     .chat-header {
@@ -540,37 +453,38 @@ body {
     
     .chat-input-container {
         padding: 12px;
+        /* Garante que vai subir com teclado */
+        position: relative;
     }
     
     .input-wrapper {
         padding: 6px 10px;
     }
     
-    .login-card,
-    .config-card {
-        padding: 28px 20px;
-        margin: 16px;
-    }
-    
     .modal-content {
         margin: 10% auto;
         width: 95%;
+    }
+    
+    /* Ajuste para quando teclado está aberto */
+    @media (max-height: 500px) {
+        .chat-header {
+            padding: 8px 12px;
+        }
+        
+        .chat-messages {
+            padding: 8px;
+        }
+        
+        .chat-input-container {
+            padding: 8px;
+        }
     }
 }
 
 @media (max-width: 480px) {
     .message {
         max-width: 90%;
-    }
-    
-    .login-card,
-    .config-card {
-        padding: 24px 16px;
-        margin: 12px;
-    }
-    
-    .logo h1 {
-        font-size: 24px;
     }
     
     .rating label {
@@ -582,4 +496,14 @@ body {
     #evaluationForm {
         padding: 20px;
     }
+}
+
+/* Garante que o body nunca tenha scroll */
+body.no-scroll {
+    overflow: hidden;
+}
+
+/* Classe para quando teclado está aberto */
+.keyboard-open .chat-input-container {
+    padding-bottom: env(safe-area-inset-bottom, 16px);
 }
