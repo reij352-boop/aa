@@ -420,4 +420,39 @@ DarwinIA (responda como tutora pedagógica):`;
             adicionarBotaoExportacao();
         }
     }, 1000);
+    
+        // Sistema de Dark Mode
+    function initTheme() {
+        const themeSwitch = document.createElement('div');
+        themeSwitch.className = 'theme-switch';
+        themeSwitch.innerHTML = `
+            <button id="themeToggle">
+                <span class="theme-icon">🌙</span>
+            </button>
+        `;
+        document.body.appendChild(themeSwitch);
+        
+        const themeToggle = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'light';
+        
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateThemeIcon(currentTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            const icon = themeToggle.querySelector('.theme-icon');
+            icon.textContent = theme === 'light' ? '🌙' : '☀️';
+        }
+    }
+    
+    // Inicializar tema quando o DOM carregar
+    initTheme();
 });
