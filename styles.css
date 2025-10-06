@@ -1,4 +1,4 @@
-/* styles.css - DarwinIA iOS Style com Dark Mode */
+/* styles.css - DarwinIA Dark Mode Fixo */
 
 * {
     margin: 0;
@@ -8,44 +8,29 @@
 }
 
 :root {
-    /* Cores Modo Claro */
-    --primary: #007AFF;
-    --primary-dark: #0056CC;
-    --secondary: #5856D6;
-    --accent: #34C759;
+    /* Cores Modo Escuro Fixo */
+    --primary: #0A84FF;
+    --primary-dark: #007AFF;
+    --secondary: #5E5CE6;
+    --accent: #30D158;
     
-    --background: #FFFFFF;
-    --background-secondary: #F2F2F7;
-    --background-tertiary: #FFFFFF;
+    --background: #000000;
+    --background-secondary: #1C1C1E;
+    --background-tertiary: #2C2C2E;
     
-    --text-primary: #000000;
-    --text-secondary: #3C3C43;
-    --text-tertiary: #8E8E93;
+    --text-primary: #FFFFFF;
+    --text-secondary: #EBEBF5;
+    --text-tertiary: #98989F;
     
-    --border: #C6C6C8;
-    --border-light: #E5E5EA;
+    --border: #38383A;
+    --border-light: #2C2C2E;
     
-    --message-user: #007AFF;
-    --message-ai: #F2F2F7;
-    
-    /* Cores Modo Escuro */
-    --background-dark: #000000;
-    --background-secondary-dark: #1C1C1E;
-    --background-tertiary-dark: #2C2C2E;
-    
-    --text-primary-dark: #FFFFFF;
-    --text-secondary-dark: #EBEBF5;
-    --text-tertiary-dark: #98989F;
-    
-    --border-dark: #38383A;
-    --border-light-dark: #2C2C2E;
-    
-    --message-user-dark: #0A84FF;
-    --message-ai-dark: #2C2C2E;
+    --message-user: #0A84FF;
+    --message-ai: #2C2C2E;
     
     /* Constantes */
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
     
     --radius-sm: 8px;
     --radius: 12px;
@@ -53,33 +38,6 @@
     --radius-xl: 20px;
     
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Sistema de Tema */
-:root {
-    --background: var(--background);
-    --background-secondary: var(--background-secondary);
-    --background-tertiary: var(--background-tertiary);
-    --text-primary: var(--text-primary);
-    --text-secondary: var(--text-secondary);
-    --text-tertiary: var(--text-tertiary);
-    --border: var(--border);
-    --border-light: var(--border-light);
-    --message-user: var(--message-user);
-    --message-ai: var(--message-ai);
-}
-
-[data-theme="dark"] {
-    --background: var(--background-dark);
-    --background-secondary: var(--background-secondary-dark);
-    --background-tertiary: var(--background-tertiary-dark);
-    --text-primary: var(--text-primary-dark);
-    --text-secondary: var(--text-secondary-dark);
-    --text-tertiary: var(--text-tertiary-dark);
-    --border: var(--border-dark);
-    --border-light: var(--border-light-dark);
-    --message-user: var(--message-user-dark);
-    --message-ai: var(--message-ai-dark);
 }
 
 body {
@@ -90,37 +48,13 @@ body {
     justify-content: center;
     align-items: center;
     padding: 16px;
-    transition: background-color 0.3s ease;
 }
 
-/* Switch de Tema */
-.theme-switch {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1000;
-}
-
-.theme-switch button {
-    background: var(--background-secondary);
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    padding: 8px 12px;
-    font-size: 12px;
-    color: var(--text-primary);
-    cursor: pointer;
-    transition: var(--transition);
-}
-
-.theme-switch button:hover {
-    background: var(--border-light);
-}
-
-/* Containers Proporcionais */
+/* Containers */
 .login-container,
 .config-container {
     width: 100%;
-    max-width: 375px; /* Largura ideal para mobile */
+    max-width: 375px;
 }
 
 .chat-container {
@@ -133,7 +67,7 @@ body {
     overflow: hidden;
 }
 
-/* Cards iOS */
+/* Cards */
 .login-card,
 .config-card {
     background: var(--background-secondary);
@@ -141,9 +75,10 @@ body {
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     text-align: center;
+    border: 1px solid var(--border);
 }
 
-/* Header iOS */
+/* Header */
 .chat-header {
     background: var(--background);
     border-bottom: 0.5px solid var(--border);
@@ -152,8 +87,6 @@ body {
     justify-content: space-between;
     align-items: center;
     flex-shrink: 0;
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
 }
 
 .header-info h1 {
@@ -176,9 +109,10 @@ body {
     border-radius: 12px;
     font-size: 11px;
     color: var(--text-secondary);
+    border: 0.5px solid var(--border);
 }
 
-/* Logo iOS */
+/* Logo */
 .logo {
     margin-bottom: 32px;
 }
@@ -196,7 +130,7 @@ body {
     font-weight: 400;
 }
 
-/* Forms iOS */
+/* Forms */
 .login-form,
 .config-form {
     text-align: left;
@@ -208,7 +142,7 @@ body {
 
 .input-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     color: var(--text-primary);
     font-weight: 600;
     font-size: 15px;
@@ -221,8 +155,8 @@ body {
     padding: 12px 16px;
     border: 1px solid var(--border);
     border-radius: var(--radius);
-    font-size: 16px; /* Tamanho iOS padrão */
-    background: var(--background);
+    font-size: 16px;
+    background: var(--background-tertiary);
     color: var(--text-primary);
     transition: var(--transition);
     -webkit-appearance: none;
@@ -237,12 +171,12 @@ body {
 
 .input-group small {
     display: block;
-    margin-top: 4px;
+    margin-top: 6px;
     color: var(--text-tertiary);
     font-size: 13px;
 }
 
-/* Botões iOS */
+/* Botões */
 .btn-primary {
     width: 100%;
     padding: 14px;
@@ -254,6 +188,7 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
+    margin-top: 8px;
 }
 
 .btn-primary:active {
@@ -274,7 +209,7 @@ body {
 }
 
 .btn-secondary:active {
-    background: var(--border-light);
+    background: var(--background-tertiary);
     transform: scale(0.98);
 }
 
@@ -298,7 +233,7 @@ body {
     transform: scale(0.95);
 }
 
-/* Área de Mensagens Proporcional */
+/* Área de Mensagens */
 .chat-messages {
     flex: 1;
     padding: 16px;
@@ -309,20 +244,14 @@ body {
     background: var(--background);
 }
 
-/* Scrollbar iOS Style */
-.chat-messages::-webkit-scrollbar {
-    width: 0px;
-}
-
-/* Mensagens Proporcionais iOS */
+/* Mensagens */
 .message {
-    max-width: 80%; /* Proporção ideal */
+    max-width: 80%;
     padding: 12px 16px;
     border-radius: 18px;
     line-height: 1.4;
     font-size: 16px;
     animation: messageSlide 0.25s ease-out;
-    position: relative;
 }
 
 @keyframes messageSlide {
@@ -348,6 +277,7 @@ body {
     background: var(--message-ai);
     color: var(--text-primary);
     border-bottom-left-radius: 4px;
+    border: 0.5px solid var(--border);
 }
 
 .message-time {
@@ -361,7 +291,7 @@ body {
     text-align: left;
 }
 
-/* Input iOS */
+/* Input */
 .chat-input-container {
     padding: 16px;
     background: var(--background);
@@ -400,7 +330,7 @@ body {
     color: var(--text-tertiary);
 }
 
-/* Indicador de Digitação iOS */
+/* Indicador de Digitação */
 .typing-indicator {
     display: flex;
     align-items: center;
@@ -412,6 +342,7 @@ body {
     margin-bottom: 4px;
     max-width: 80px;
     border-bottom-left-radius: 4px;
+    border: 0.5px solid var(--border);
 }
 
 .typing-indicator span {
@@ -427,7 +358,7 @@ body {
     30% { transform: translateY(-4px); opacity: 1; }
 }
 
-/* Modal iOS */
+/* Modal de Avaliação - CORRIGIDO */
 .modal {
     display: none;
     position: fixed;
@@ -436,14 +367,14 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .modal-content {
     background-color: var(--background-secondary);
-    margin: 20% auto;
+    margin: 15% auto;
     padding: 0;
     border-radius: var(--radius-lg);
     width: 90%;
@@ -451,16 +382,17 @@ body {
     box-shadow: var(--shadow-md);
     animation: modalSlideIn 0.3s ease-out;
     overflow: hidden;
+    border: 1px solid var(--border);
 }
 
 @keyframes modalSlideIn {
-    from { transform: translateY(50px); opacity: 0; }
+    from { transform: translateY(30px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header {
     padding: 20px 24px;
-    background: var(--background);
+    background: var(--background-tertiary);
     border-bottom: 0.5px solid var(--border);
     display: flex;
     justify-content: space-between;
@@ -487,18 +419,33 @@ body {
 }
 
 .close:active {
-    background: var(--background-secondary);
+    background: var(--background);
 }
 
 #evaluationForm {
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-/* Rating iOS */
+/* Rating */
+.rating-group {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rating-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
 .rating {
     display: flex;
     gap: 8px;
-    margin-top: 12px;
     justify-content: center;
 }
 
@@ -517,22 +464,30 @@ body {
     cursor: pointer;
     transition: var(--transition);
     font-weight: 600;
-    font-size: 17px;
+    font-size: 16px;
     color: var(--text-secondary);
+    border: 1px solid var(--border);
 }
 
 .rating input[type="radio"]:checked + label {
     background: var(--primary);
     color: white;
+    border-color: var(--primary);
     transform: scale(1.05);
 }
 
 .rating label:active {
-    background: var(--border-light);
+    background: var(--background);
     transform: scale(0.95);
 }
 
-/* Info iOS */
+/* Botão de enviar avaliação - VISÍVEL */
+.evaluation-submit {
+    margin-top: 16px;
+    width: 100%;
+}
+
+/* Info */
 .login-info {
     margin-top: 20px;
     padding: 12px 16px;
@@ -540,9 +495,10 @@ body {
     border-radius: var(--radius);
     font-size: 13px;
     color: var(--text-secondary);
+    border: 0.5px solid var(--border);
 }
 
-/* Mobile Optimizations */
+/* Mobile */
 @media (max-width: 768px) {
     body {
         padding: 0;
@@ -622,37 +578,8 @@ body {
         height: 40px;
         font-size: 15px;
     }
-}
-
-/* Utilitários */
-.hidden {
-    display: none !important;
-}
-
-.text-sm {
-    font-size: 13px;
-}
-
-.text-xs {
-    font-size: 11px;
-}
-
-.flex {
-    display: flex;
-}
-
-.items-center {
-    align-items: center;
-}
-
-.justify-between {
-    justify-content: space-between;
-}
-
-.gap-2 {
-    gap: 8px;
-}
-
-.w-full {
-    width: 100%;
+    
+    #evaluationForm {
+        padding: 20px;
+    }
 }
