@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Enviando prompt para Gemini:", prompt); // Para debug
         
         // Fazer requisição para a API do Gemini - VERSÃO CORRIGIDA
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
