@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Chatbot Gemini</title>
+  <style>
+    body { font-family: Arial; margin: 20px; }
+    #chat { border: 1px solid #ccc; height: 300px; overflow-y: scroll; padding: 10px; }
+    input[type=text] { width: 70%; padding: 8px; }
+    button { padding: 8px 15px; }
+  </style>
+</head>
+<body>
+
+  <h2>Chat com Gemini</h2>
+  <div id="chat"></div>
+  <input id="pergunta" placeholder="Digite sua pergunta">
+  <button onclick="enviar()">Enviar</button>
+
+  <script>
+    const GEMINI_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w'; // ← pegue em https://makersuite.google.com/app/apikey
+
+    async function enviar() {
+      const campo = document.getElementById('pergunta');
+      const msg = campo.value;
+      if (!msg) return;
+
+      // mostra a pergunta na tela
+      const chat = document.getElementById('chat');
+      chat.innerHTML += `<div><b>Você:</b> ${msg}</div>`;
+      campo.value = '';
+
+      // chama a IA
+      const res = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${GEMINI_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ contents: [{ parts: [{ text: msg }] }] })
+        }
+      );
+      const dados = await res.json();
+      const texto = dados.candidates[0].content.parts[0].text;
+
+      // mostra a resposta
+      chat.innerHTML += `<div><b>Bot:</b> ${texto}</div>`;
+      chat.scrollTop = chat.scrollHeight;
+
+      // guarda no Google Sheets (opcional, veja passo 6)
+      salvarNoSheets(msg, texto);
+    }
+
+    function salvarNoSheets(pergunta, resposta) {
+      // URL do seu Apps Script (veja passo 6)
+      const URL_SHEETS = 'https://script.google.com/macros/s/AKfycbw2mmy2XEIj_XBsw9n5bHahGQa6Son5ZoawOCjGePbFOdTNnGG4PZuFCCQ8MU9-7JujAQ/exec';
+      fetch(`${URL_SHEETS}?action=write&pergunta=${encodeURIComponent(pergunta)}&resposta=${encodeURIComponent(resposta)}`);
+    }
+  </script>
+
+</body>
+</html>
