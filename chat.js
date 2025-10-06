@@ -1,6 +1,8 @@
-// chat.js - DarwinIA com Google Apps Script (Versão Corrigida)
+tá certo?
 
-const GEMINI_API_KEY = 'AIzaSyCwt41tpQg4CBhfFGD22yct0w8WuDKa6zQ';
+// chat.js - DarwinIA com Google Apps Script (Versão Simplificada)
+
+const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w';
 
 // URL do seu Web App do Google Apps Script
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVXZjNJnzqTi7I2ljKvmjYNVPdLOgixMjl5s5vwXKyALJYdcD0wwqAOs3yNhltEfFv/exec';
@@ -164,7 +166,7 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log("Enviando prompt para Gemini:", prompt);
         
         // Fazer requisição para a API do Gemini
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -265,7 +267,7 @@ DarwinIA (responda como tutora pedagógica):`;
             evaluateBtn.disabled = true;
             evaluateBtn.textContent = 'Salvando...';
             
-            // Enviar para Google Apps Script
+            // Enviar para Google Apps Script (MÉTODO SUPER SIMPLES)
             await enviarParaAppsScriptSimples(evaluationData);
             
             evaluationModal.style.display = 'none';
@@ -304,7 +306,7 @@ DarwinIA (responda como tutora pedagógica):`;
             // Método 1: Tentar fetch com no-cors (mais simples)
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors',
+                mode: 'no-cors', // Ignora CORS
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -420,59 +422,4 @@ DarwinIA (responda como tutora pedagógica):`;
             adicionarBotaoExportacao();
         }
     }, 1000);
-
-    // ========== MOBILE KEYBOARD FIX ==========
-    function setupMobileKeyboard() {
-        const messageInput = document.getElementById('messageInput');
-        const chatMessages = document.getElementById('chatMessages');
-        
-        // Verifica se é mobile
-        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        
-        if (!isMobile) return;
-        
-        let keyboardHeight = 0;
-        
-        // Detecta quando o teclado abre
-        messageInput.addEventListener('focus', function() {
-            console.log('Teclado aberto');
-            
-            // Força o scroll para baixo
-            setTimeout(() => {
-                scrollToBottom();
-                
-                // Ajusta a altura das mensagens
-                if (window.visualViewport) {
-                    keyboardHeight = window.innerHeight - window.visualViewport.height;
-                    chatMessages.style.height = `calc(100vh - ${keyboardHeight + 120}px)`;
-                }
-            }, 300);
-        });
-        
-        // Detecta quando o teclado fecha
-        messageInput.addEventListener('blur', function() {
-            console.log('Teclado fechado');
-            
-            // Restaura altura normal
-            setTimeout(() => {
-                chatMessages.style.height = '';
-                scrollToBottom();
-            }, 200);
-        });
-        
-        // Ajusta quando viewport muda (teclado aparece/desaparece)
-        if (window.visualViewport) {
-            window.visualViewport.addEventListener('resize', function() {
-                setTimeout(scrollToBottom, 100);
-            });
-        }
-        
-        // Previne comportamento padrão que pode quebrar o layout
-        window.addEventListener('resize', function() {
-            setTimeout(scrollToBottom, 100);
-        });
-    }
-    
-    // Inicializar quando DOM carregar
-    setTimeout(setupMobileKeyboard, 1000);
-}); // ← ESTE É O FECHAMENTO CORRETO DO document.addEventListener
+});
