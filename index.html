@@ -978,28 +978,25 @@
             return name.split(' ').map(n => n[0]).join('').toUpperCase().substring(0, 2);
         }
         
-        // Registrar no Google Sheets (simulação)
-        async function logToSheets(tipo, dados) {
+// Registrar no Google Sheets
+async function logToSheets(tipo, dados) {
   const URL = 'https://script.google.com/macros/s/AKfycbz3UEU0kIEm2wwr6Pp8For_kqIZEqHhuTlJadT9MrigPSDeVQrD21N0xEn3-KL20OKD/exec';
 
-  // monta a linha que vai pra planilha
   const row = [
-    tipo,                      // coluna A
-    dados.student || '',       // coluna B
-    dados.topic   || '',       // coluna C
-    dados.difficulty || '',    // coluna D
-    JSON.stringify(dados).substring(0, 480), // coluna E (resumo)
-    new Date().toISOString()   // coluna F (data/hora)
+    tipo,
+    dados.student || '',
+    dados.topic   || '',
+    dados.difficulty || '',
+    JSON.stringify(dados).substring(0, 480),
+    new Date().toISOString()
   ];
 
   await fetch(URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ row })   // envia objeto com array
+    body: JSON.stringify({ row })
   });
 }
-            // Implementar com Google Apps Script
-        }
         
         // Mostrar formulário de feedback
         function showFeedbackForm() {
