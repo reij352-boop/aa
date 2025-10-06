@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DarwinIA - Configuração</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="config-container">
+        <div class="config-card">
+            <div class="header">
+                <h1>Configurar Sessão</h1>
+                <p id="userWelcome">Olá, [Nome]!</p>
+            </div>
+            
+            <form id="configForm" class="config-form">
+                <div class="input-group">
+                    <label for="tema">Tema de Biologia</label>
+                    <select id="tema" name="tema" required>
+                        <option value="">Selecione um tema</option>
+                        <option value="Genética">Genética</option>
+                        <option value="Ecologia">Ecologia</option>
+                        <option value="Fisiologia">Fisiologia</option>
+                        <option value="Evolução">Evolução</option>
+                        <option value="Citologia">Citologia</option>
+                        <option value="Anatomia">Anatomia Humana</option>
+                        <option value="Botânica">Botânica</option>
+                        <option value="Zoologia">Zoologia</option>
+                        <option value="Microbiologia">Microbiologia</option>
+                        <option value="Bioquímica">Bioquímica</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="dificuldade">Nível de Dificuldade</label>
+                    <select id="dificuldade" name="dificuldade" required>
+                        <option value="">Selecione o nível</option>
+                        <option value="Iniciante">Iniciante</option>
+                        <option value="Intermediário">Intermediário</option>
+                        <option value="Avançado">Avançado</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="arquivo">Arquivo de Referência (opcional)</label>
+                    <input type="file" id="arquivo" name="arquivo" accept=".txt">
+                    <small>Envie um arquivo .txt com informações adicionais</small>
+                </div>
+                
+                <button type="submit" class="btn-primary">Iniciar Chat</button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="config.js"></script>
+</body>
+</html>
