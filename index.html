@@ -49,12 +49,18 @@
       // guarda no Google Sheets (opcional, veja passo 6)
       salvarNoSheets(msg, texto);
     }
-
     function salvarNoSheets(pergunta, resposta) {
-      // URL do seu Apps Script (veja passo 6)
-      const URL_SHEETS = 'https://script.google.com/macros/s/AKfycbw2mmy2XEIj_XBsw9n5bHahGQa6Son5ZoawOCjGePbFOdTNnGG4PZuFCCQ8MU9-7JujAQ/exec';
-      fetch(`${URL_SHEETS}?action=write&pergunta=${encodeURIComponent(pergunta)}&resposta=${encodeURIComponent(resposta)}`);
-    }
+  const URL_SHEETS = 'https://script.google.com/macros/s/AKfycbw2mmy2XEIj_XBsw9n5bHahGQa6Son5ZoawOCjGePbFOdTNnGG4PZuFCCQ8MU9-7JujAQ/exec';
+  fetch(URL_SHEETS, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      action: 'write',
+      pergunta: pergunta,
+      resposta: resposta
+    })
+  });
+}
   </script>
 
 </body>
