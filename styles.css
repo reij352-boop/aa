@@ -1,129 +1,202 @@
-/* styles.css - DarwinIA Design Moderno e Mobile-First */
+/* styles.css - DarwinIA iOS Style com Dark Mode */
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
 :root {
-    --primary: #2563eb;
-    --primary-dark: #1d4ed8;
-    --primary-light: #3b82f6;
-    --secondary: #f59e0b;
-    --accent: #8b5cf6;
-    --text: #1f2937;
-    --text-light: #6b7280;
-    --background: #f8fafc;
-    --white: #ffffff;
-    --gray-50: #f9fafb;
-    --gray-100: #f3f4f6;
-    --gray-200: #e5e7eb;
-    --gray-300: #d1d5db;
-    --gray-400: #9ca3af;
-    --success: #10b981;
-    --error: #ef4444;
+    /* Cores Modo Claro */
+    --primary: #007AFF;
+    --primary-dark: #0056CC;
+    --secondary: #5856D6;
+    --accent: #34C759;
     
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    --background: #FFFFFF;
+    --background-secondary: #F2F2F7;
+    --background-tertiary: #FFFFFF;
     
-    --radius-sm: 6px;
-    --radius: 8px;
-    --radius-lg: 12px;
+    --text-primary: #000000;
+    --text-secondary: #3C3C43;
+    --text-tertiary: #8E8E93;
     
-    --transition: all 0.2s ease-in-out;
+    --border: #C6C6C8;
+    --border-light: #E5E5EA;
+    
+    --message-user: #007AFF;
+    --message-ai: #F2F2F7;
+    
+    /* Cores Modo Escuro */
+    --background-dark: #000000;
+    --background-secondary-dark: #1C1C1E;
+    --background-tertiary-dark: #2C2C2E;
+    
+    --text-primary-dark: #FFFFFF;
+    --text-secondary-dark: #EBEBF5;
+    --text-tertiary-dark: #98989F;
+    
+    --border-dark: #38383A;
+    --border-light-dark: #2C2C2E;
+    
+    --message-user-dark: #0A84FF;
+    --message-ai-dark: #2C2C2E;
+    
+    /* Constantes */
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+    
+    --radius-sm: 8px;
+    --radius: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 20px;
+    
+    --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Sistema de Tema */
+:root {
+    --background: var(--background);
+    --background-secondary: var(--background-secondary);
+    --background-tertiary: var(--background-tertiary);
+    --text-primary: var(--text-primary);
+    --text-secondary: var(--text-secondary);
+    --text-tertiary: var(--text-tertiary);
+    --border: var(--border);
+    --border-light: var(--border-light);
+    --message-user: var(--message-user);
+    --message-ai: var(--message-ai);
+}
+
+[data-theme="dark"] {
+    --background: var(--background-dark);
+    --background-secondary: var(--background-secondary-dark);
+    --background-tertiary: var(--background-tertiary-dark);
+    --text-primary: var(--text-primary-dark);
+    --text-secondary: var(--text-secondary-dark);
+    --text-tertiary: var(--text-tertiary-dark);
+    --border: var(--border-dark);
+    --border-light: var(--border-light-dark);
+    --message-user: var(--message-user-dark);
+    --message-ai: var(--message-ai-dark);
 }
 
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: var(--background);
+    color: var(--text-primary);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 16px;
-    line-height: 1.5;
+    transition: background-color 0.3s ease;
 }
 
-/* Containers Compactos */
+/* Switch de Tema */
+.theme-switch {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.theme-switch button {
+    background: var(--background-secondary);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 8px 12px;
+    font-size: 12px;
+    color: var(--text-primary);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-switch button:hover {
+    background: var(--border-light);
+}
+
+/* Containers Proporcionais */
 .login-container,
 .config-container {
     width: 100%;
-    max-width: 400px;
+    max-width: 375px; /* Largura ideal para mobile */
 }
 
 .chat-container {
     width: 100%;
     max-width: 100%;
     height: 100vh;
-    background: var(--white);
+    background: var(--background);
     display: flex;
     flex-direction: column;
     overflow: hidden;
 }
 
-/* Cards Compactos */
+/* Cards iOS */
 .login-card,
 .config-card {
-    background: var(--white);
+    background: var(--background-secondary);
     padding: 32px 24px;
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     text-align: center;
 }
 
-/* Header Compacto */
+/* Header iOS */
 .chat-header {
-    background: var(--white);
-    border-bottom: 1px solid var(--gray-200);
-    padding: 16px 20px;
+    background: var(--background);
+    border-bottom: 0.5px solid var(--border);
+    padding: 12px 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--shadow-sm);
     flex-shrink: 0;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
 }
 
 .header-info h1 {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 4px;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 2px;
 }
 
 .session-info {
-    font-size: 12px;
-    color: var(--text-light);
+    font-size: 13px;
+    color: var(--text-tertiary);
     display: flex;
     gap: 12px;
 }
 
 .session-info span {
-    background: var(--gray-100);
-    padding: 2px 8px;
+    background: var(--background-secondary);
+    padding: 4px 8px;
     border-radius: 12px;
     font-size: 11px;
+    color: var(--text-secondary);
 }
 
-/* Logo Compacta */
+/* Logo iOS */
 .logo {
-    margin-bottom: 24px;
+    margin-bottom: 32px;
 }
 
 .logo h1 {
-    font-size: 24px;
-    font-weight: 800;
+    font-size: 28px;
+    font-weight: 700;
     color: var(--primary);
     margin-bottom: 4px;
 }
 
 .logo p {
-    color: var(--text-light);
-    font-size: 14px;
+    color: var(--text-tertiary);
+    font-size: 15px;
+    font-weight: 400;
 }
 
-/* Forms Compactos */
+/* Forms iOS */
 .login-form,
 .config-form {
     text-align: left;
@@ -136,21 +209,23 @@ body {
 .input-group label {
     display: block;
     margin-bottom: 6px;
-    color: var(--text);
+    color: var(--text-primary);
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .input-group input,
 .input-group select,
 .input-group textarea {
     width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--gray-300);
+    padding: 12px 16px;
+    border: 1px solid var(--border);
     border-radius: var(--radius);
-    font-size: 14px;
+    font-size: 16px; /* Tamanho iOS padrão */
+    background: var(--background);
+    color: var(--text-primary);
     transition: var(--transition);
-    background: var(--white);
+    -webkit-appearance: none;
 }
 
 .input-group input:focus,
@@ -158,56 +233,57 @@ body {
 .input-group textarea:focus {
     outline: none;
     border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
 .input-group small {
     display: block;
     margin-top: 4px;
-    color: var(--text-light);
-    font-size: 12px;
+    color: var(--text-tertiary);
+    font-size: 13px;
 }
 
-/* Botões Compactos */
+/* Botões iOS */
 .btn-primary {
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     background: var(--primary);
-    color: var(--white);
+    color: white;
     border: none;
     border-radius: var(--radius);
-    font-size: 14px;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
 }
 
-.btn-primary:hover {
+.btn-primary:active {
     background: var(--primary-dark);
+    transform: scale(0.98);
 }
 
 .btn-secondary {
     padding: 8px 16px;
-    background: var(--secondary);
-    color: var(--white);
-    border: none;
+    background: var(--background-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
     border-radius: var(--radius);
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    font-size: 13px;
+    font-size: 15px;
 }
 
-.btn-secondary:hover {
-    background: #eab308;
+.btn-secondary:active {
+    background: var(--border-light);
+    transform: scale(0.98);
 }
 
 .btn-send {
     background: var(--primary);
-    color: var(--white);
+    color: white;
     border: none;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -217,11 +293,12 @@ body {
     flex-shrink: 0;
 }
 
-.btn-send:hover {
+.btn-send:active {
     background: var(--primary-dark);
+    transform: scale(0.95);
 }
 
-/* Área de Mensagens Compacta */
+/* Área de Mensagens Proporcional */
 .chat-messages {
     flex: 1;
     padding: 16px;
@@ -229,49 +306,53 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: var(--gray-50);
+    background: var(--background);
 }
 
-/* Mensagens Compactas */
+/* Scrollbar iOS Style */
+.chat-messages::-webkit-scrollbar {
+    width: 0px;
+}
+
+/* Mensagens Proporcionais iOS */
 .message {
-    max-width: 85%;
+    max-width: 80%; /* Proporção ideal */
     padding: 12px 16px;
     border-radius: 18px;
     line-height: 1.4;
-    font-size: 14px;
-    animation: messageSlide 0.2s ease-out;
+    font-size: 16px;
+    animation: messageSlide 0.25s ease-out;
+    position: relative;
 }
 
 @keyframes messageSlide {
     from { 
         opacity: 0; 
-        transform: translateY(8px);
+        transform: translateY(8px) scale(0.96);
     }
     to { 
         opacity: 1; 
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
 .user-message {
     align-self: flex-end;
-    background: var(--primary);
-    color: var(--white);
-    border-bottom-right-radius: 6px;
+    background: var(--message-user);
+    color: white;
+    border-bottom-right-radius: 4px;
 }
 
 .ai-message {
     align-self: flex-start;
-    background: var(--white);
-    color: var(--text);
-    border: 1px solid var(--gray-200);
-    border-bottom-left-radius: 6px;
-    box-shadow: var(--shadow-sm);
+    background: var(--message-ai);
+    color: var(--text-primary);
+    border-bottom-left-radius: 4px;
 }
 
 .message-time {
     font-size: 11px;
-    opacity: 0.7;
+    opacity: 0.6;
     margin-top: 4px;
     text-align: right;
 }
@@ -280,11 +361,11 @@ body {
     text-align: left;
 }
 
-/* Input Compacto */
+/* Input iOS */
 .chat-input-container {
     padding: 16px;
-    background: var(--white);
-    border-top: 1px solid var(--gray-200);
+    background: var(--background);
+    border-top: 0.5px solid var(--border);
     flex-shrink: 0;
 }
 
@@ -292,10 +373,10 @@ body {
     display: flex;
     align-items: flex-end;
     gap: 8px;
-    background: var(--gray-50);
+    background: var(--background-secondary);
     border-radius: 20px;
     padding: 8px 12px;
-    border: 1px solid var(--gray-300);
+    border: 1px solid var(--border);
     transition: var(--transition);
 }
 
@@ -308,30 +389,35 @@ body {
     border: none;
     outline: none;
     background: transparent;
-    font-size: 14px;
+    font-size: 16px;
     resize: none;
-    max-height: 100px;
+    max-height: 120px;
     line-height: 1.4;
+    color: var(--text-primary);
 }
 
-/* Indicador de Digitação Compacto */
+#messageInput::placeholder {
+    color: var(--text-tertiary);
+}
+
+/* Indicador de Digitação iOS */
 .typing-indicator {
     display: flex;
     align-items: center;
     gap: 4px;
-    padding: 8px 12px;
-    background: var(--white);
-    border-radius: 16px;
-    border: 1px solid var(--gray-200);
+    padding: 12px 16px;
+    background: var(--message-ai);
+    border-radius: 18px;
     align-self: flex-start;
     margin-bottom: 4px;
     max-width: 80px;
+    border-bottom-left-radius: 4px;
 }
 
 .typing-indicator span {
     height: 6px;
     width: 6px;
-    background-color: var(--gray-400);
+    background-color: var(--text-tertiary);
     border-radius: 50%;
     animation: typing 1.4s infinite ease-in-out;
 }
@@ -341,7 +427,7 @@ body {
     30% { transform: translateY(-4px); opacity: 1; }
 }
 
-/* Modal Compacto */
+/* Modal iOS */
 .modal {
     display: none;
     position: fixed;
@@ -350,59 +436,69 @@ body {
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
 .modal-content {
-    background-color: var(--white);
+    background-color: var(--background-secondary);
     margin: 20% auto;
     padding: 0;
     border-radius: var(--radius-lg);
     width: 90%;
-    max-width: 400px;
-    box-shadow: var(--shadow-lg);
-    animation: modalSlideIn 0.2s ease-out;
+    max-width: 340px;
+    box-shadow: var(--shadow-md);
+    animation: modalSlideIn 0.3s ease-out;
+    overflow: hidden;
 }
 
 @keyframes modalSlideIn {
-    from { transform: translateY(-20px); opacity: 0; }
+    from { transform: translateY(50px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
 }
 
 .modal-header {
     padding: 20px 24px;
-    background: var(--primary);
-    color: var(--white);
-    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    background: var(--background);
+    border-bottom: 0.5px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
 .modal-header h2 {
-    font-size: 18px;
+    font-size: 17px;
     font-weight: 600;
+    color: var(--text-primary);
 }
 
 .close {
     font-size: 20px;
     cursor: pointer;
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--text-tertiary);
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.close:active {
+    background: var(--background-secondary);
 }
 
 #evaluationForm {
     padding: 24px;
 }
 
-/* Rating Compacto */
+/* Rating iOS */
 .rating {
     display: flex;
-    gap: 6px;
-    margin-top: 8px;
+    gap: 8px;
+    margin-top: 12px;
     justify-content: center;
 }
 
@@ -411,9 +507,9 @@ body {
 }
 
 .rating label {
-    width: 36px;
-    height: 36px;
-    background-color: var(--gray-200);
+    width: 44px;
+    height: 44px;
+    background-color: var(--background-tertiary);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -421,34 +517,40 @@ body {
     cursor: pointer;
     transition: var(--transition);
     font-weight: 600;
-    font-size: 13px;
+    font-size: 17px;
+    color: var(--text-secondary);
 }
 
 .rating input[type="radio"]:checked + label {
-    background: var(--secondary);
-    color: var(--white);
+    background: var(--primary);
+    color: white;
+    transform: scale(1.05);
 }
 
-/* Info Compacta */
+.rating label:active {
+    background: var(--border-light);
+    transform: scale(0.95);
+}
+
+/* Info iOS */
 .login-info {
     margin-top: 20px;
-    padding: 12px;
-    background-color: var(--gray-50);
+    padding: 12px 16px;
+    background-color: var(--background-tertiary);
     border-radius: var(--radius);
     font-size: 13px;
-    border-left: 3px solid var(--primary);
+    color: var(--text-secondary);
 }
 
-/* Mobile First - Otimizações para Celular */
+/* Mobile Optimizations */
 @media (max-width: 768px) {
     body {
-        padding: 12px;
-        background: var(--primary);
+        padding: 0;
     }
     
     .chat-container {
         height: 100dvh;
-        border-radius: 12px;
+        border-radius: 0;
     }
     
     .chat-header {
@@ -460,13 +562,13 @@ body {
     }
     
     .session-info {
-        font-size: 11px;
+        font-size: 12px;
         gap: 8px;
     }
     
     .session-info span {
         font-size: 10px;
-        padding: 2px 6px;
+        padding: 3px 6px;
     }
     
     .chat-messages {
@@ -475,9 +577,9 @@ body {
     }
     
     .message {
-        max-width: 90%;
-        padding: 10px 12px;
-        font-size: 13px;
+        max-width: 85%;
+        padding: 10px 14px;
+        font-size: 15px;
     }
     
     .chat-input-container {
@@ -490,7 +592,8 @@ body {
     
     .login-card,
     .config-card {
-        padding: 24px 20px;
+        padding: 28px 20px;
+        margin: 16px;
     }
     
     .modal-content {
@@ -500,27 +603,24 @@ body {
 }
 
 @media (max-width: 480px) {
-    .chat-container {
-        border-radius: 0;
-    }
-    
     .message {
-        max-width: 95%;
+        max-width: 90%;
     }
     
     .login-card,
     .config-card {
-        padding: 20px 16px;
+        padding: 24px 16px;
+        margin: 12px;
     }
     
     .logo h1 {
-        font-size: 20px;
+        font-size: 24px;
     }
     
     .rating label {
-        width: 32px;
-        height: 32px;
-        font-size: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 15px;
     }
 }
 
@@ -530,7 +630,7 @@ body {
 }
 
 .text-sm {
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .text-xs {
