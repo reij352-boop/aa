@@ -1,7 +1,7 @@
 // chat.js - Lógica do Chat e Integrações
 
 // Configurações da API
-const GEMINI_API_KEY = 'SUA_CHAVE_API_AQUI'; // Substitua pela sua chave da API Gemini
+const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w'; // Substitua pela sua chave da API Gemini
 const GOOGLE_SHEETS_URL = 'SUA_URL_DA_PLANILHA_AQUI'; // URL do Google Apps Script
 
 // Variáveis globais
