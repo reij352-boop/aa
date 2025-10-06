@@ -1,4 +1,4 @@
-/* styles.css - DarwinIA Chat Fixo e Mobile Otimizado */
+/* styles.css - DarwinIA Completo Corrigido */
 
 * {
     margin: 0;
@@ -46,11 +46,133 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0;
-    overflow: hidden; /* Remove scroll do body */
+    padding: 16px;
 }
 
-/* Chat Container FIXO - Sem Scroll */
+/* ========== TELAS DE LOGIN/CONFIG ========== */
+.login-container,
+.config-container {
+    width: 100%;
+    max-width: 375px;
+}
+
+.login-card,
+.config-card {
+    background: var(--background-secondary);
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    border: 1px solid var(--border);
+}
+
+.logo {
+    margin-bottom: 32px;
+}
+
+.logo h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 4px;
+}
+
+.logo p {
+    color: var(--text-tertiary);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.header h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+}
+
+#userWelcome {
+    color: var(--text-tertiary);
+    margin-bottom: 24px;
+    font-size: 16px;
+}
+
+/* Forms Login/Config */
+.login-form,
+.config-form {
+    text-align: left;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    font-size: 16px;
+    background: var(--background-tertiary);
+    color: var(--text-primary);
+    transition: var(--transition);
+    -webkit-appearance: none;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.input-group small {
+    display: block;
+    margin-top: 6px;
+    color: var(--text-tertiary);
+    font-size: 13px;
+}
+
+/* Botões Login/Config */
+.btn-primary {
+    width: 100%;
+    padding: 14px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    margin-top: 8px;
+}
+
+.btn-primary:active {
+    background: var(--primary-dark);
+    transform: scale(0.98);
+}
+
+.login-info {
+    margin-top: 20px;
+    padding: 12px 16px;
+    background-color: var(--background-tertiary);
+    border-radius: var(--radius);
+    font-size: 13px;
+    color: var(--text-secondary);
+    border: 0.5px solid var(--border);
+}
+
+/* ========== CHAT ========== */
 .chat-container {
     width: 100%;
     max-width: 100%;
@@ -66,7 +188,7 @@ body {
     bottom: 0;
 }
 
-/* Header Fixo */
+/* Header Chat */
 .chat-header {
     background: var(--background);
     border-bottom: 0.5px solid var(--border);
@@ -111,11 +233,10 @@ body {
     flex-direction: column;
     gap: 12px;
     background: var(--background);
-    /* Permite scroll apenas nesta área */
-    -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+    -webkit-overflow-scrolling: touch;
 }
 
-/* Input Container - Vai subir com teclado */
+/* Input Container - MOBILE FIX */
 .chat-input-container {
     padding: 16px;
     background: var(--background);
@@ -123,6 +244,8 @@ body {
     flex-shrink: 0;
     position: relative;
     z-index: 5;
+    /* Fix para mobile */
+    margin-bottom: 0;
 }
 
 .input-wrapper {
@@ -156,7 +279,7 @@ body {
     color: var(--text-tertiary);
 }
 
-/* Botão Enviar */
+/* Botões Chat */
 .btn-send {
     background: var(--primary);
     color: white;
@@ -177,7 +300,6 @@ body {
     transform: scale(0.95);
 }
 
-/* Botão Avaliar */
 .btn-secondary {
     padding: 8px 16px;
     background: var(--background-secondary);
@@ -392,34 +514,28 @@ body {
     transform: scale(0.95);
 }
 
-.btn-primary {
-    width: 100%;
-    padding: 14px;
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius);
-    font-size: 17px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: var(--transition);
-    margin-top: 8px;
-}
-
-.btn-primary:active {
-    background: var(--primary-dark);
-    transform: scale(0.98);
-}
-
 .evaluation-submit {
     margin-top: 16px;
     width: 100%;
 }
 
-/* Mobile - Otimização para Teclado */
+/* ========== MOBILE FIXES ========== */
 @media (max-width: 768px) {
+    body {
+        padding: 0;
+    }
+    
+    /* Login/Config Mobile */
+    .login-card,
+    .config-card {
+        padding: 28px 20px;
+        margin: 16px;
+        width: calc(100% - 32px);
+    }
+    
+    /* Chat Mobile */
     .chat-container {
-        height: 100dvh; /* Usa altura dinâmica da viewport */
+        height: 100dvh;
     }
     
     .chat-header {
@@ -453,7 +569,7 @@ body {
     
     .chat-input-container {
         padding: 12px;
-        /* Garante que vai subir com teclado */
+        /* Mobile keyboard fix */
         position: relative;
     }
     
@@ -465,26 +581,21 @@ body {
         margin: 10% auto;
         width: 95%;
     }
-    
-    /* Ajuste para quando teclado está aberto */
-    @media (max-height: 500px) {
-        .chat-header {
-            padding: 8px 12px;
-        }
-        
-        .chat-messages {
-            padding: 8px;
-        }
-        
-        .chat-input-container {
-            padding: 8px;
-        }
-    }
 }
 
 @media (max-width: 480px) {
     .message {
         max-width: 90%;
+    }
+    
+    .login-card,
+    .config-card {
+        padding: 24px 16px;
+        margin: 12px;
+    }
+    
+    .logo h1 {
+        font-size: 24px;
     }
     
     .rating label {
@@ -498,12 +609,18 @@ body {
     }
 }
 
-/* Garante que o body nunca tenha scroll */
-body.no-scroll {
-    overflow: hidden;
+/* Mobile Keyboard Fix - IMPORTANTE */
+@media (max-height: 700px) {
+    .chat-input-container {
+        padding-bottom: max(16px, env(safe-area-inset-bottom));
+    }
 }
 
-/* Classe para quando teclado está aberto */
-.keyboard-open .chat-input-container {
-    padding-bottom: env(safe-area-inset-bottom, 16px);
+/* Garante que inputs sejam legíveis no mobile */
+@media (max-width: 768px) {
+    .input-group input,
+    .input-group select,
+    .input-group textarea {
+        font-size: 16px; /* Previne zoom no iOS */
+    }
 }
