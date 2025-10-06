@@ -1,8 +1,9 @@
-// chat.js - DarwinIA Chat com Google Sheets Integration (Versão Corrigida)
+// chat.js - DarwinIA com Google Apps Script
 
-// Configurações da API
 const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w';
-const SHEET_ID = '1vTCX7-kRWedfbGTBcpaMFBVQbHJvUOsQiS_NeDqaRNM';
+
+// URL do seu Web App do Google Apps Script
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVXZjNJnzqTi7I2ljKvmjYNVPdLOgixMjl5s5vwXKyALJYdcD0wwqAOs3yNhltEfFv/exec';
 
 // Variáveis globais
 let chatHistory = [];
@@ -260,34 +261,34 @@ DarwinIA (responda como tutora pedagógica):`;
         };
         
         try {
-            // Salvar localmente como backup
-            salvarDadosLocalmente(evaluationData);
+            // Mostrar loading
+            evaluateBtn.disabled = true;
+            evaluateBtn.textContent = 'Salvando...';
             
-            // Tentar enviar para Google Sheets (método simplificado)
-            await enviarParaGoogleSheetsSimplificado(evaluationData);
+            // Enviar para Google Apps Script
+            const resultado = await enviarParaAppsScript(evaluationData);
             
             evaluationModal.style.display = 'none';
-            alert('✅ Avaliação salva com sucesso! Os dados foram registrados.');
-            
-            // Limpar dados da sessão
-            localStorage.removeItem('darwinia_session');
-            
-            // Redirecionar para login
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
+            alert('✅ Dados salvos com sucesso na planilha!');
             
         } catch (error) {
-            console.error('Erro ao salvar avaliação:', error);
+            console.error('Erro ao salvar dados:', error);
             evaluationModal.style.display = 'none';
-            alert('✅ Avaliação salva localmente! Os dados ficarão armazenados no navegador.');
+            alert('❌ Erro ao salvar dados: ' + error.message + '\n\nOs dados foram salvos localmente no navegador.');
             
-            // Limpar e redirecionar mesmo com erro
-            localStorage.removeItem('darwinia_session');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
+            // Salvar localmente como backup
+            salvarDadosLocalmente(evaluationData);
+        } finally {
+            // Restaurar botão
+            evaluateBtn.disabled = false;
+            evaluateBtn.textContent = 'Avaliar Sessão';
         }
+        
+        // Limpar dados da sessão e redirecionar
+        localStorage.removeItem('darwinia_session');
+        setTimeout(() => {
+            window.location.href = 'index.html';
+        }, 2000);
     }
     
     // Função para determinar nível final baseado na avaliação
@@ -297,22 +298,57 @@ DarwinIA (responda como tutora pedagógica):`;
         return 'Iniciante';
     }
     
+    // Função para enviar dados para o Google Apps Script
+    async function enviarParaAppsScript(data) {
+        console.log('Enviando dados para Apps Script:', data);
+        
+        const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        });
+        
+        if (!response.ok) {
+            throw new Error(`Erro de rede: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        if (result.error) {
+            throw new Error(result.error);
+        }
+        
+        console.log('Resposta do Apps Script:', result);
+        return result;
+    }
+    
     // Função para salvar dados localmente (backup)
     function salvarDadosLocalmente(data) {
         let dadosExistentes = JSON.parse(localStorage.getItem('darwinia_avaliacoes') || '[]');
         dadosExistentes.push(data);
         localStorage.setItem('darwinia_avaliacoes', JSON.stringify(dadosExistentes));
-        console.log('Dados salvos localmente:', data);
-        
-        // Oferecer download como CSV
-        oferecerDownloadCSV(dadosExistentes);
+        console.log('Dados salvos localmente como backup:', data);
     }
     
-    // Função para oferecer download dos dados como CSV
-    function oferecerDownloadCSV(dados) {
-        if (dados.length > 0 && confirm('Deseja baixar os dados em CSV para importar no Google Sheets?')) {
-            exportarParaCSV(dados);
-        }
+    // Adicionar botão de exportação para dados locais
+    function adicionarBotaoExportacao() {
+        const header = document.querySelector('.chat-header');
+        const exportButton = document.createElement('button');
+        exportButton.className = 'btn-secondary';
+        exportButton.innerHTML = '📊 Exportar Dados Locais';
+        exportButton.style.marginLeft = '10px';
+        exportButton.onclick = function() {
+            const dados = JSON.parse(localStorage.getItem('darwinia_avaliacoes') || '[]');
+            if (dados.length > 0) {
+                exportarParaCSV(dados);
+            } else {
+                alert('Nenhum dado local disponível para exportar.');
+            }
+        };
+        
+        evaluateBtn.parentNode.insertBefore(exportButton, evaluateBtn.nextSibling);
     }
     
     // Função para exportar dados para CSV
@@ -326,7 +362,7 @@ DarwinIA (responda como tutora pedagógica):`;
             const dataFormatada = data.toLocaleDateString('pt-BR');
             const horaFormatada = data.toLocaleTimeString('pt-BR');
             
-            // Limpar a conversa para CSV (remover quebras de linha e vírgulas)
+            // Limpar a conversa para CSV
             const conversaLimpa = item.conversa.replace(/,/g, ';').replace(/\n/g, ' ').replace(/"/g, "'");
             
             csv += `"${item.nome}","${dataFormatada}","${horaFormatada}","${item.tema}","${item.dificuldadeInicial}","${conversaLimpa}","${item.avaliacaoAjuda}","${item.avaliacaoEntendimento}","${item.nivelFinal}"\n`;
@@ -338,7 +374,7 @@ DarwinIA (responda como tutora pedagógica):`;
         const url = URL.createObjectURL(blob);
         
         link.setAttribute('href', url);
-        link.setAttribute('download', `darwinia_dados_${new Date().toISOString().split('T')[0]}.csv`);
+        link.setAttribute('download', `darwinia_dados_backup_${new Date().toISOString().split('T')[0]}.csv`);
         link.style.visibility = 'hidden';
         
         document.body.appendChild(link);
@@ -346,46 +382,11 @@ DarwinIA (responda como tutora pedagógica):`;
         document.body.removeChild(link);
     }
     
-    // SOLUÇÃO SIMPLIFICADA - Usando Google Forms como intermediário
-    async function enviarParaGoogleSheetsSimplificado(data) {
-        // Método alternativo: usar Google Forms + Google Sheets
-        // Crie um Google Form conectado à sua planilha e use esta função
-        
-        console.log('Enviando dados para análise:', data);
-        
-        // Por enquanto, vamos apenas salvar localmente e oferecer CSV
-        // Em produção, você pode implementar:
-        // 1. Google Forms + Apps Script
-        // 2. Netlify Functions
-        // 3. Google Cloud Functions
-        
-        return new Promise((resolve) => {
-            console.log('Dados prontos para integração futura com Google Sheets');
-            resolve();
-        });
-    }
-    
-    // Botão para exportar todos os dados
-    function adicionarBotaoExportacao() {
-        const header = document.querySelector('.chat-header');
-        const exportButton = document.createElement('button');
-        exportButton.className = 'btn-secondary';
-        exportButton.innerHTML = '📊 Exportar Dados';
-        exportButton.style.marginLeft = '10px';
-        exportButton.onclick = function() {
-            const dados = JSON.parse(localStorage.getItem('darwinia_avaliacoes') || '[]');
-            if (dados.length > 0) {
-                exportarParaCSV(dados);
-            } else {
-                alert('Nenhum dado disponível para exportar.');
-            }
-        };
-        
-        evaluateBtn.parentNode.insertBefore(exportButton, evaluateBtn.nextSibling);
-    }
-    
-    // Adicionar botão de exportação se houver dados
+    // Adicionar botão de exportação se houver dados locais
     setTimeout(() => {
-        adicionarBotaoExportacao();
+        const dadosLocais = JSON.parse(localStorage.getItem('darwinia_avaliacoes') || '[]');
+        if (dadosLocais.length > 0) {
+            adicionarBotaoExportacao();
+        }
     }, 1000);
 });
