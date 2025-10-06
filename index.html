@@ -979,10 +979,7 @@
         }
         // Registrar no Google Sheets
         async function logToSheets(tipo, dados) {
-  const API_KEY   = 'AIzaSyCxm0DcjgTr0ggfKQwqivms-SNfRWUDFFE';   // sua chave
-  const SHEET_ID  = '1vTCX7-kRWedfbGTBcpaMFBVQbHJvUOsQiS_NeDqaRNM'; // seu ID
-  const RANGE     = 'Sheet1!A:F';
-
+  const URL = 'https://script.google.com/macros/s/AKfycby19kq0fEe-SBx_MfzJs1tFuLNl4iOeNeBTh_TwQ7foNsFb5gF2IP2zVFblATowJhfb/exec';   // <-- cole aqui o novo link
   const row = [
     new Date().toISOString(),
     tipo,
@@ -992,12 +989,10 @@
     JSON.stringify(dados).substring(0, 480)
   ];
 
-  const url = `https://sheets.googleapis.com/v4/spreadsheets/${SHEET_ID}/values/${encodeURIComponent(RANGE)}:append?valueInputOption=RAW&key=${API_KEY}`;
-
-  await fetch(url, {
+  await fetch(URL, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ values: [row] })
+    body: JSON.stringify({ row })   // envia array direto
   });
 }
         
