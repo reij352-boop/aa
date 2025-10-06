@@ -420,4 +420,40 @@ DarwinIA (responda como tutora pedagógica):`;
             adicionarBotaoExportacao();
         }
     }, 1000);
+
+    // No final do chat.js, antes do }); final
+
+    // Detectar teclado mobile e ajustar layout
+    function setupMobileKeyboard() {
+        const messageInput = document.getElementById('messageInput');
+        const chatContainer = document.querySelector('.chat-container');
+        
+        // Verifica se é dispositivo móvel
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (!isMobile) return;
+        
+        // Quando o input foca (teclado abre)
+        messageInput.addEventListener('focus', function() {
+            chatContainer.classList.add('keyboard-open');
+            
+            // Scroll para baixo quando teclado abre
+            setTimeout(() => {
+                scrollToBottom();
+            }, 300);
+        });
+        
+        // Quando o input perde foco (teclado fecha)
+        messageInput.addEventListener('blur', function() {
+            chatContainer.classList.remove('keyboard-open');
+        });
+        
+        // Ajusta altura quando viewport muda (teclado aparece/desaparece)
+        window.addEventListener('resize', function() {
+            setTimeout(scrollToBottom, 100);
+        });
+    }
+    
+    // Inicializar detecção de teclado mobile
+    setupMobileKeyboard();
 });
