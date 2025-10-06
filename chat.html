@@ -3,87 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DarwinIA - Chat</title>
+    <title>DarwinIA - Login</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="chat-container">
-        <!-- Header -->
-        <div class="chat-header">
-            <div class="header-info">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo">
                 <h1>Darwin<span>IA</span></h1>
-                <div class="session-info">
-                    <span id="currentTheme">Tema: [Tema]</span>
-                    <span id="currentLevel">Nível: [Nível]</span>
-                </div>
+                <p>Seu tutor especialista em Biologia</p>
             </div>
-            <button id="evaluateBtn" class="btn-secondary">Avaliar Sessão</button>
-        </div>
-
-        <!-- Área de Mensagens -->
-        <div class="chat-messages" id="chatMessages">
-            <!-- Mensagens serão inseridas aqui -->
-        </div>
-
-        <!-- Área de Input -->
-        <div class="chat-input-container">
-            <div class="input-wrapper">
-                <textarea id="messageInput" placeholder="Digite sua pergunta sobre biologia..." rows="1"></textarea>
-                <button id="sendButton" class="btn-send">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal de Avaliação -->
-    <div id="evaluationModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Avaliar Sessão</h2>
-                <span class="close">&times;</span>
-            </div>
-            <form id="evaluationForm">
+            
+            <form id="loginForm" class="login-form">
                 <div class="input-group">
-                    <label>Quanto a DarwinIA ajudou no seu aprendizado?</label>
-                    <div class="rating">
-                        <input type="radio" id="help1" name="ajuda" value="1">
-                        <label for="help1">1</label>
-                        <input type="radio" id="help2" name="ajuda" value="2">
-                        <label for="help2">2</label>
-                        <input type="radio" id="help3" name="ajuda" value="3">
-                        <label for="help3">3</label>
-                        <input type="radio" id="help4" name="ajuda" value="4">
-                        <label for="help4">4</label>
-                        <input type="radio" id="help5" name="ajuda" value="5">
-                        <label for="help5">5</label>
-                    </div>
+                    <label for="nome">Nome Completo</label>
+                    <input type="text" id="nome" name="nome" required>
                 </div>
                 
                 <div class="input-group">
-                    <label>Quanto você entende do conteúdo agora?</label>
-                    <div class="rating">
-                        <input type="radio" id="understanding1" name="entendimento" value="1">
-                        <label for="understanding1">1</label>
-                        <input type="radio" id="understanding2" name="entendimento" value="2">
-                        <label for="understanding2">2</label>
-                        <input type="radio" id="understanding3" name="entendimento" value="3">
-                        <label for="understanding3">3</label>
-                        <input type="radio" id="understanding4" name="entendimento" value="4">
-                        <label for="understanding4">4</label>
-                        <input type="radio" id="understanding5" name="entendimento" value="5">
-                        <label for="understanding5">5</label>
-                    </div>
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" required>
                 </div>
                 
-                <button type="submit" class="btn-primary">Enviar Avaliação</button>
+                <button type="submit" class="btn-primary">Entrar</button>
             </form>
+            
+            <div class="login-info">
+                <p>Senha padrão: <strong>biologia2024</strong></p>
+            </div>
         </div>
     </div>
-
-    <script src="chat.js"></script>
+    
+    <script src="script.js"></script>
 </body>
 </html>
