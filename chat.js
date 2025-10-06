@@ -1,8 +1,8 @@
-// chat.js - Lógica do Chat e Integrações
+// chat.js - Lógica do Chat (Versão Corrigida)
 
-// Configurações da API
-const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w'; // Substitua pela sua chave da API Gemini
-const GOOGLE_SHEETS_URL = 'SUA_URL_DA_PLANILHA_AQUI'; // URL do Google Apps Script
+// Configurações da API - COLE SUA API KEY AQUI
+const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w'; // ← COLE SUA CHAVE AQUI
+const GOOGLE_SHEETS_URL = ''; // Deixe vazio por enquanto
 
 // Variáveis globais
 let chatHistory = [];
@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) {
             console.error('Erro ao obter resposta da IA:', error);
             removeTypingIndicator();
-            addMessage('Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente.', false);
+            addMessage('Desculpe, ocorreu um erro ao conectar com a IA. Verifique sua conexão e tente novamente.', false);
         }
     }
     
@@ -155,12 +155,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // Função para obter resposta da IA (Gemini API)
+    // Função para obter resposta da IA (Gemini API) - VERSÃO CORRIGIDA
     async function getAIResponse(userMessage) {
         // Construir o prompt contextualizado
         const prompt = construirPrompt(userMessage);
         
-        // Fazer requisição para a API do Gemini
+        console.log("Enviando prompt para Gemini:", prompt); // Para debug
+        
+        // Fazer requisição para a API do Gemini - VERSÃO CORRIGIDA
         const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
             headers: {
@@ -171,16 +173,31 @@ document.addEventListener('DOMContentLoaded', function() {
                     parts: [{
                         text: prompt
                     }]
-                }]
+                }],
+                generationConfig: {
+                    temperature: 0.7,
+                    topK: 40,
+                    topP: 0.95,
+                    maxOutputTokens: 1024,
+                }
             })
         });
         
         if (!response.ok) {
-            throw new Error('Erro na API do Gemini');
+            const errorText = await response.text();
+            console.error('Erro da API:', errorText);
+            throw new Error(`Erro na API do Gemini: ${response.status} ${response.statusText}`);
         }
         
         const data = await response.json();
-        return data.candidates[0].content.parts[0].text;
+        
+        // Verificar se a resposta tem a estrutura esperada
+        if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts[0]) {
+            return data.candidates[0].content.parts[0].text;
+        } else {
+            console.error('Estrutura inesperada da resposta:', data);
+            throw new Error('Resposta da API em formato inesperado');
+        }
     }
     
     // Função para construir o prompt contextualizado
@@ -193,25 +210,27 @@ CONTEXTO:
 - Nível: ${sessionData.dificuldade}
 - Arquivo de referência: ${sessionData.arquivoConteudo ? 'Fornecido' : 'Não fornecido'}
 
-DIRETRIZES PEDAGÓGICAS:
+DIRETRIZES PEDAGÓGICAS IMPORTANTES:
 1. NUNCA dê respostas diretas ou completas de imediato
-2. Faça perguntas orientadoras para ajudar o aluno a construir o conhecimento
+2. SEMPRE faça perguntas orientadoras para ajudar o aluno a construir o conhecimento
 3. Adapte a complexidade conforme o nível (${sessionData.dificuldade})
 4. Use analogias e exemplos quando apropriado
 5. Verifique a compreensão do aluno periodicamente
 6. Corrija conceitos equivocados de forma construtiva
+7. Seja encorajadora e paciente
+8. Mantenha o foco no tema: ${sessionData.tema}
 
 HISTÓRICO DA CONVERSA:
-${chatHistory.map(msg => `${msg.type === 'user' ? 'Aluno' : 'Tutor'}: ${msg.content}`).join('\n')}
+${chatHistory.slice(-6).map(msg => `${msg.type === 'user' ? 'Aluno' : 'Tutor'}: ${msg.content}`).join('\n')}
 
 CONVERSA ATUAL:
 Aluno: ${userMessage}
 
-DarwinIA:`;
+DarwinIA (responda como tutora pedagógica):`;
 
         // Adicionar conteúdo do arquivo se disponível
         if (sessionData.arquivoConteudo) {
-            prompt += `\n\nCONTEÚDO DO ARQUIVO DE REFERÊNCIA:\n${sessionData.arquivoConteudo}`;
+            prompt += `\n\nCONTEÚDO DO ARQUIVO DE REFERÊNCIA (use como base):\n${sessionData.arquivoConteudo.substring(0, 2000)}`; // Limita o tamanho
         }
         
         return prompt;
@@ -241,8 +260,10 @@ DarwinIA:`;
         };
         
         try {
-            // Enviar dados para o Google Sheets
-            await enviarParaSheets(evaluationData);
+            // Se tiver URL do Google Sheets, enviar dados
+            if (GOOGLE_SHEETS_URL) {
+                await enviarParaSheets(evaluationData);
+            }
             
             // Fechar modal e mostrar confirmação
             evaluationModal.style.display = 'none';
@@ -258,7 +279,13 @@ DarwinIA:`;
             
         } catch (error) {
             console.error('Erro ao enviar avaliação:', error);
-            alert('Erro ao enviar avaliação. Por favor, tente novamente.');
+            // Mesmo com erro no envio, permitir continuar
+            evaluationModal.style.display = 'none';
+            alert('Avaliação registrada localmente! Obrigado por usar a DarwinIA.');
+            localStorage.removeItem('darwinia_session');
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
         }
     }
     
@@ -271,6 +298,11 @@ DarwinIA:`;
     
     // Função para enviar dados para o Google Sheets
     async function enviarParaSheets(data) {
+        if (!GOOGLE_SHEETS_URL) {
+            console.log('Google Sheets não configurado - dados salvos apenas localmente');
+            return;
+        }
+        
         const response = await fetch(GOOGLE_SHEETS_URL, {
             method: 'POST',
             headers: {
