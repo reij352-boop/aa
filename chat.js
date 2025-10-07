@@ -1,6 +1,4 @@
-tá certo?
-
-// chat.js - DarwinIA com Google Apps Script (Versão Simplificada)
+// chat.js - DarwinIA com Google Apps Script
 
 const GEMINI_API_KEY = 'AIzaSyCID-mSLQ8jPgHRSSiqX84C6DpcowiuP3w';
 
@@ -267,7 +265,7 @@ DarwinIA (responda como tutora pedagógica):`;
             evaluateBtn.disabled = true;
             evaluateBtn.textContent = 'Salvando...';
             
-            // Enviar para Google Apps Script (MÉTODO SUPER SIMPLES)
+            // Enviar para Google Apps Script
             await enviarParaAppsScriptSimples(evaluationData);
             
             evaluationModal.style.display = 'none';
@@ -306,7 +304,7 @@ DarwinIA (responda como tutora pedagógica):`;
             // Método 1: Tentar fetch com no-cors (mais simples)
             fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
-                mode: 'no-cors', // Ignora CORS
+                mode: 'no-cors',
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -422,4 +420,59 @@ DarwinIA (responda como tutora pedagógica):`;
             adicionarBotaoExportacao();
         }
     }, 1000);
+
+    // ========== MOBILE KEYBOARD FIX ==========
+    function setupMobileKeyboard() {
+        const messageInput = document.getElementById('messageInput');
+        const chatMessages = document.getElementById('chatMessages');
+        
+        // Verifica se é mobile
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        
+        if (!isMobile) return;
+        
+        let keyboardHeight = 0;
+        
+        // Detecta quando o teclado abre
+        messageInput.addEventListener('focus', function() {
+            console.log('Teclado aberto');
+            
+            // Força o scroll para baixo
+            setTimeout(() => {
+                scrollToBottom();
+                
+                // Ajusta a altura das mensagens
+                if (window.visualViewport) {
+                    keyboardHeight = window.innerHeight - window.visualViewport.height;
+                    chatMessages.style.height = `calc(100vh - ${keyboardHeight + 120}px)`;
+                }
+            }, 300);
+        });
+        
+        // Detecta quando o teclado fecha
+        messageInput.addEventListener('blur', function() {
+            console.log('Teclado fechado');
+            
+            // Restaura altura normal
+            setTimeout(() => {
+                chatMessages.style.height = '';
+                scrollToBottom();
+            }, 200);
+        });
+        
+        // Ajusta quando viewport muda (teclado aparece/desaparece)
+        if (window.visualViewport) {
+            window.visualViewport.addEventListener('resize', function() {
+                setTimeout(scrollToBottom, 100);
+            });
+        }
+        
+        // Previne comportamento padrão que pode quebrar o layout
+        window.addEventListener('resize', function() {
+            setTimeout(scrollToBottom, 100);
+        });
+    }
+    
+    // Inicializar quando DOM carregar
+    setTimeout(setupMobileKeyboard, 1000);
 });
