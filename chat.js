@@ -1,6 +1,6 @@
 // chat.js - DarwinIA com Google Apps Script
 
-const GEMINI_API_KEY = 'AIzaSyAATmtfY9foLGwex9IMv4Ss8Ho9wrUreMM';
+const GEMINI_API_KEY = 'AIzaSyCwt41tpQg4CBhfFGD22yct0w8WuDKa6zQ';
 
 // URL do seu Web App do Google Apps Script
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyVXZjNJnzqTi7I2ljKvmjYNVPdLOgixMjl5s5vwXKyALJYdcD0wwqAOs3yNhltEfFv/exec';
